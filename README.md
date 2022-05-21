@@ -1,5 +1,6 @@
 # ideal-octo-barnacle
-C++ exercise on implementing a train maintenance scheduler
+This repository contains some C++ code implementing a scheduling algorithm for the allocation of a number of trains on some platforms, so that certain constraints are satisfied. 
+More details on the problem statement and solution requirements are contained in the file `exercise.pdf`.
 
 ## Build instructions
 The program makes use of a small part of the [Boost Library](https://www.boost.org), which was employed to construct a simple
