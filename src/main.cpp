@@ -16,42 +16,71 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
     * @param train_arrivals vector of TrainArrival objects representing trains to be assigned
     */
     int j;
-    
-    vector<time_t> occupation(available_platforms);
-    fill(occupation.begin(), occupation.end(), 0);
 
-    vector<string> type_platform(available_platforms);
-    fill(type_platform.begin(), type_platform.end(), "");
+    vector<time_t> occupation;
+    vector<string> type_platform;
 
-    if (available_platforms < 0) {
-        available_platforms = train_arrivals.size();
-        cout << "The assigment algorithm is now assuming we have an infinite amount of platforms!" << endl;
-    } 
+    if (available_platforms != -1) {
+        cout << "Hereeee" << endl;
+        occupation.reserve(available_platforms);
+        type_platform.reserve(available_platforms);
+        fill(occupation.begin(), occupation.end(), 0);
+        fill(type_platform.begin(), type_platform.end(), "");
+    }
 
-    for (auto &train:train_arrivals) { 
-        for (j=0; j<available_platforms; j++) {
-            if (type_platform.at(j).empty()) {
-                train.set_platform(j); 
-                occupation.at(j) = train.get_start_date() + train.get_duration();
-                type_platform.at(j)=train.get_type(); 
-                break;
-
+    if (available_platforms == -1) {
+        /* case in which there is an infinite amount of platforms */
+        for (auto &train: train_arrivals) {
+            cout << train.get_start_date() << endl;
+            if (occupation.empty()) {
+                occupation.push_back(train.get_start_date() + train.get_duration());
+                type_platform.push_back(train.get_type());
+                train.set_platform(j);
             }
-            else if (type_platform.at(j)==train.get_type()) { 
-                if (train.get_start_date() >= occupation.at(j)) {
-                    train.set_platform(j); 
+            else {
+                for (j = 0; j < occupation.size(); j++) {
+                    if (type_platform.at(j) == train.get_type()) {
+                        if (train.get_start_date() >= occupation.at(j)) {
+                            train.set_platform(j);
+                            occupation.at(j) = train.get_start_date() + train.get_duration();
+                            break;
+                        }
+                    }
+                }
+                if (train.get_platform()==-1) {
+                    occupation.push_back(train.get_start_date() + train.get_duration());
+                    type_platform.push_back(train.get_type());
+                    train.set_platform(j+1);
+                }
+            }
+            
+        }
+    } else {
+        /* case in which there is a finite amount of platforms */
+        for (auto &train: train_arrivals) {
+            for (j = 0; j < available_platforms; j++) {
+                if (type_platform.at(j).empty()) {
+                    train.set_platform(j);
                     occupation.at(j) = train.get_start_date() + train.get_duration();
+                    type_platform.at(j) = train.get_type();
                     break;
+
+                } else if (type_platform.at(j) == train.get_type()) {
+                    if (train.get_start_date() >= occupation.at(j)) {
+                        train.set_platform(j);
+                        occupation.at(j) = train.get_start_date() + train.get_duration();
+                        break;
                     }
 
+                }
+            }
+            if (train.get_platform() == -1) {
+                //cout << "No platform available for train with plate: " << train.get_plate() << endl;
             }
         }
-        if (j == available_platforms - 1) {
-            //cout << "No platform available for train with plate: " << train.get_plate() << endl;
-        }
+
     }
-    
-    }
+}
 
 int main(int argc, const char *argv[])
 {
@@ -69,6 +98,7 @@ int main(int argc, const char *argv[])
         notify(vm);
         auto train_arrivals = get_input(input);
         sort(train_arrivals.begin(), train_arrivals.end());
+
         assign_platform(available_platforms, train_arrivals);
         for (auto &train:train_arrivals) {
             cout << "Train plate: " << train.get_plate() << " Train type: " << train.get_type()
