@@ -17,15 +17,16 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
     */
     int j;
 
-    vector<time_t> occupation;
-    vector<string> type_platform;
-
+    vector<time_t> occupation {};
+    vector<string> type_platform {};
     if (available_platforms != -1) {
-        cout << "Hereeee" << endl;
         occupation.reserve(available_platforms);
         type_platform.reserve(available_platforms);
-        fill(occupation.begin(), occupation.end(), 0);
-        fill(type_platform.begin(), type_platform.end(), "");
+        for (j=0; j<available_platforms; j++) {
+            occupation.push_back(0);
+            type_platform.emplace_back("");
+        }
+        cout << "heree" << endl;
     }
 
     if (available_platforms == -1) {
@@ -53,7 +54,7 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
                     train.set_platform(j+1);
                 }
             }
-            
+
         }
     } else {
         /* case in which there is a finite amount of platforms */
@@ -73,9 +74,6 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
                     }
 
                 }
-            }
-            if (train.get_platform() == -1) {
-                //cout << "No platform available for train with plate: " << train.get_plate() << endl;
             }
         }
 
@@ -98,12 +96,11 @@ int main(int argc, const char *argv[])
         notify(vm);
         auto train_arrivals = get_input(input);
         sort(train_arrivals.begin(), train_arrivals.end());
-
+        cout << "main"<<endl;
         assign_platform(available_platforms, train_arrivals);
         for (auto &train:train_arrivals) {
             cout << "Train plate: " << train.get_plate() << " Train type: " << train.get_type()
-                 << " Start date: " << train.get_start_date()
-                 << " Platform: " << train.get_platform() << endl;
+                 << " Platform: " << ((train.get_platform()==-1) ? "Unassigned" : to_string(train.get_platform())) << endl;
         }
 
     }
