@@ -23,11 +23,13 @@ one can type the following command
 cd build
 ./src/assign_platform_run \
 --n_platforms -1 \
---input ../data/input_small.csv > out
+--input ../data/input_small.csv \ 
+--assign_first false > out
 ```
 The command-line parameter `n_platforms` is the number of the available platforms on which 
 trains can be assigned. If `n_plaforms = -1` then the program assumes that there is an infinite amout of platforms on which one can 
 assign the trains. The `input` parameters is the path to the input files containing train information.
+The parameter `assign_first` is a `bool` value controlling the option of assigning a train to a compatible platform at the first available time point.
 The algorithm output is printed to `stdout`, so, with the above command, the outout will be contained in the `out` file.
 
 The output is of the form
