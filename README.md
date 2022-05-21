@@ -15,7 +15,7 @@ cd build
 cmake ../
 make 
 ```
-Note that these installation instructions have been tested only on Mac OS and Linx machines.
+Note that these installation instructions have been tested only on Mac OS and Linux machines.
 ## Execute on sample dataset
 In order to execute the program on a sample dataset, which is stored in the `data` folder
 one can type the following command
