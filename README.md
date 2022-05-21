@@ -22,7 +22,7 @@ one can type the following command
 ```asm
 cd build
 ./src/assign_platform_run \
---n_platforms -1 \
+--n_platforms 10 \
 --input ../data/input_small.csv \ 
 --assign_first false > out
 ```
