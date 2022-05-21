@@ -64,13 +64,10 @@ int main(int argc, const char *argv[])
         notify(vm);
         auto train_arrivals = get_input(input);
         sort(train_arrivals.begin(), train_arrivals.end());
-        for (auto &train:train_arrivals) {
-            cout << "Train plate: " << train.get_plate() << " Start date: " << train.get_start_date()
-                 << " Platform: " << train.get_platform() << endl;
-        }
         assign_platform(available_platforms, train_arrivals);
         for (auto &train:train_arrivals) {
             cout << "Train plate: " << train.get_plate() << " Train type: " << train.get_type()
+                 << " Start date: " << train.get_start_date()
                  << " Platform: " << train.get_platform() << endl;
         }
 
