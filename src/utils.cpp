@@ -9,12 +9,12 @@
 using namespace std;
 
 
-// utility functions in order to:
-//     -- convert string to time, read
-//     -- read the csv input
-//     -- parse the input and encode it into the correct format
-
 time_t convert_str_to_time(string t) {
+    /**
+    * Convert string to time_t
+    * @param t string representing a timestamp to be converted
+    * @return t_time_time time_t converted timestamp
+    */
     time_t t_time_t;
     int yy, month, dd, hh, mm, ss;
     struct tm whenStart;
@@ -33,6 +33,12 @@ time_t convert_str_to_time(string t) {
     return t_time_t;
 }
 vector<vector<string>> read_csv(const string & fname, char sep) {
+    /**
+    * Read csv file
+    * @param fname name of the file to be read
+    * @param sep character separator for file to be parsed
+    * @return matrix of string representing parsed files
+    */
     std::vector<std::vector<string> > items;
     std::ifstream ifs(fname);
     if (ifs.fail()) {
@@ -53,6 +59,11 @@ vector<vector<string>> read_csv(const string & fname, char sep) {
 }
 
 vector<TrainArrival> get_input(const string &fname) {
+    /**
+    * Parse input file and convert it into a vector of TrainArrival objects
+    * @param fname name of the file to be read
+    * @return vector of TrainArrival objects
+    */
     vector<vector<string>> train_info = read_csv(fname, ',');
 
     vector<TrainArrival> train_arrivals {};

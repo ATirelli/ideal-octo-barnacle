@@ -8,23 +8,28 @@
 using namespace std;
 using namespace boost::program_options;
 
-// this is the main algorithm of the exercise, where we assign each train to a platform, if possible
-void assign_platform(size_t available_platoforms, vector<TrainArrival>& train_arrivals) {
-    int j, designed_platform;
+
+void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arrivals) {
+    /**
+    * Train assignment algorithm
+    * @param available_platforms Number of available platforms on which we can assign train
+    * @param train_arrivals vector of TrainArrival objects representing trains to be assigned
+    */
+    int j;
     
-    vector<time_t> occupation(available_platoforms);
+    vector<time_t> occupation(available_platforms);
     fill(occupation.begin(), occupation.end(), 0);
 
-    vector<string> type_platform(available_platoforms);
+    vector<string> type_platform(available_platforms);
     fill(type_platform.begin(), type_platform.end(), "");
 
-    if (available_platoforms < 0) { 
-        available_platoforms = train_arrivals.size();
+    if (available_platforms < 0) {
+        available_platforms = train_arrivals.size();
         cout << "The assigment algorithm is now assuming we have an infinite amount of platforms!" << endl;
     } 
 
     for (auto &train:train_arrivals) { 
-        for (j=0; j<available_platoforms; j++) { 
+        for (j=0; j<available_platforms; j++) {
             if (type_platform.at(j).empty()) {
                 train.set_platform(j); 
                 occupation.at(j) = train.get_start_date() + train.get_duration();
@@ -41,7 +46,7 @@ void assign_platform(size_t available_platoforms, vector<TrainArrival>& train_ar
 
             }
         }
-        if (j == available_platoforms - 1) { 
+        if (j == available_platforms - 1) {
             //cout << "No platform available for train with plate: " << train.get_plate() << endl;
         }
     }
