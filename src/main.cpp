@@ -138,7 +138,7 @@ int main(int argc, const char *argv[])
             effective_start_date = train.get_start_date();
             cout << train_plate << "," << train_type<<","<<
             ((train_platform==-1) ? "Unassigned" : to_string(train_platform))
-            <<"," << ((train_platform==-1) ? "" : ctime(&effective_start_date));
+            <<"," << ((train_platform==-1) ? "\n" : ctime(&effective_start_date));
         }
 
     }
