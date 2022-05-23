@@ -95,6 +95,7 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
                     if (type_platform.at(j) == train.get_type()) {
                         if (train.get_duration() < min_value) {
                             min_index = j;
+                            min_value = train.get_duration();
                         }
                     }
                 }
