@@ -15,7 +15,7 @@ cd build
 cmake ../
 make 
 ```
-Note that these installation instructions have been tested only on Mac OS and Linx machines.
+Note that these installation instructions have been tested only on Mac OS and Linux machines.
 ## Execute on sample dataset
 In order to execute the program on a sample dataset, which is stored in the `data` folder
 one can type the following command
@@ -37,6 +37,7 @@ for each train, the train plate, the train type, the assigned platform and the e
 
 The output is of the form
 ```asm
+<<<<<<< HEAD
  Train_plate,Train_type,Platform,Effective_start_date
  CO057GD,ELETTRICO 700Hz,5,Wed Jan  1 02:00:00 2020
  AA437PK,DIESEL 4000.0,2,Sat Jan 11 20:00:00 2020
