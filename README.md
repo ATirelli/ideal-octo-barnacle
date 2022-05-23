@@ -35,9 +35,8 @@ the first available time point. The output of the algorithm is a `csv` table, pr
 for each train, the train plate, the train type, the assigned platform and the effective start date (if the platform is not 
 `Unassigned`).
 
-The output is of the form
+A sample output is of the form
 ```asm
-<<<<<<< HEAD
  Train_plate,Train_type,Platform,Effective_start_date
  CO057GD,ELETTRICO 700Hz,5,Wed Jan  1 02:00:00 2020
  AA437PK,DIESEL 4000.0,2,Sat Jan 11 20:00:00 2020
