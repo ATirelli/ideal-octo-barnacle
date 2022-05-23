@@ -34,4 +34,6 @@ vector<vector<string>> read_csv(string &, char);
 
 vector<TrainArrival> get_input(const string &);
 
+char* convert_time_t_to_string(time_t);
+
 #endif //SCHEDULE_TRAIN_ARRIVALS_UTILS_H

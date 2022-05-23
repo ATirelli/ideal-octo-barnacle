@@ -61,6 +61,14 @@ void TrainArrival::set_platform(int platform) {
     this->assigned_platform = platform;
 }
 
+void TrainArrival::set_start_date(size_t date) {
+    /**
+    * setter method fort the start_date attribute
+    * @param date attribute
+    */
+    this->start_date = date;
+}
+
 bool TrainArrival::operator<(const TrainArrival & train) const {
     /**
     * "<" operator overloading for the TrainArrival class

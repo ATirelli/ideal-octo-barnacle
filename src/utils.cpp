@@ -81,3 +81,8 @@ vector<TrainArrival> get_input(const string &fname) {
     }
     return train_arrivals;
 }
+
+char* convert_time_t_to_string(time_t) {
+    time_t buf;
+    return ctime(&buf);
+}

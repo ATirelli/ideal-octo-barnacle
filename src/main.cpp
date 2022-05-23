@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 #include <boost/program_options.hpp>
+#include <limits>
+#include <ctime>
 #include "utils.h"
 
 using namespace std;
@@ -16,7 +18,7 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
     * @param available_platforms Number of available platforms on which we can assign train
     * @param train_arrivals vector of TrainArrival objects representing trains to be assigned
     */
-    int j;
+    int j, min_index, min_value;
     vector<string>::iterator ip;
     vector<string> train_types;
     for (auto &train: train_arrivals) {
@@ -67,7 +69,6 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
                     train.set_platform(j+1);
                 }
             }
-
         }
     } else {
         /* case in which there is a finite amount of platforms */
@@ -88,27 +89,31 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
                 }
             }
             if (train.get_platform()==-1 && assign_first_available) {
+                min_index = 0;
+                min_value = numeric_limits<int>::max();
                 for (j = 0; j < available_platforms; j++) {
                     if (type_platform.at(j) == train.get_type()) {
-                        train.set_platform(j);
-                        occupation.at(j) += train.get_duration();
-                        break;
+                        if (train.get_duration() < min_value) {
+                            min_index = j;
+                        }
                     }
-
                 }
+                train.set_platform(min_index);
+                train.set_start_date(occupation.at(min_index));
+                occupation.at(min_index) += train.get_duration();
             }
         }
     }
-
 }
 
 
 int main(int argc, const char *argv[])
 {
     try {
-        int available_platforms;
+        int available_platforms, train_platform;
         bool assign_first_available;
-        string input;
+        string input, train_plate, train_type;
+        time_t effective_start_date;
         options_description desc{"Options"};
         desc.add_options()
                 ("help,h", "Help screen")
@@ -124,9 +129,16 @@ int main(int argc, const char *argv[])
         sort(train_arrivals.begin(), train_arrivals.end());
         assign_platform(available_platforms, train_arrivals, assign_first_available);
 
+        // Printing output to stdout in csv format
+        cout << "Train_plate,Train_type,Platform,Effective_start_date" << endl;
         for (auto &train:train_arrivals) {
-            cout << "Train plate: " << train.get_plate() << " Train type: " << train.get_type()
-                 << " Platform: " << ((train.get_platform()==-1) ? "Unassigned" : to_string(train.get_platform())) << endl;
+            train_plate = train.get_plate();
+            train_type = train.get_type();
+            train_platform = train.get_platform();
+            effective_start_date = train.get_start_date();
+            cout << train_plate << "," << train_type<<","<<
+            ((train_platform==-1) ? "Unassigned" : to_string(train_platform))
+            <<"," << ((train_platform==-1) ? "" : ctime(&effective_start_date));
         }
 
     }

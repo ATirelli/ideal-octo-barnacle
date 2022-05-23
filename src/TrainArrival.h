@@ -36,5 +36,7 @@ public:
 
     void set_platform(int);
 
+    void set_start_date(size_t start_date);
+
 };
 #endif //SCHEDULE_TRAIN_ARRIVALS_TRAINARRIVAL_H
