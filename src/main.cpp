@@ -32,6 +32,13 @@ void assign_platform(size_t available_platforms, vector<TrainArrival>& train_arr
     vector<time_t> occupation {};
     vector<string> type_platform {};
 
+    if (available_platforms != -1 && number_train_types> available_platforms) {
+        cout << "Number of train types larger than available platform!" << endl;
+        cout << "On this input the minimum number of platforms is: " << number_train_types << endl;
+        cout << "Assignment task cannot be performed, exiting program." << endl;
+        exit(1);
+    }
+
     if (available_platforms != -1) {
         occupation.reserve(available_platforms);
         type_platform.reserve(available_platforms);
